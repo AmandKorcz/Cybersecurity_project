@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../database/js');
+const connection = require('./database.js');
 
 //GET - Endpoint para listar os usuários cadastrados
 router.get('/', (req, res) =>{
