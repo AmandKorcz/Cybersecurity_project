@@ -21,3 +21,26 @@ router.post('/', (req, res) =>{
     });
 });
 
+//PUT - Endpoint para atualizar cadastros dos usuários
+router.put('/', (req, res) =>{
+    const {id} = req.params;
+    const {nome, email} = req.body;
+
+    connection.query("UPDATE users SET nome = ?, email = ? WHERE id = ?", [nome, email, id], (err, results) =>{
+        if (err) return res.status(500).json({erro: err});
+        if (results.affectedRows === 0) return res.status(404).json({message: 'Usuário não encontrado'});
+        res.status(200).json({message: 'Usuário atualizado com sucesso'});
+    });
+});
+
+//DELETE - Endpoint para deletar cadastro de usuários
+router.delete('/:id', (req, res) => {
+    const {id} = req.params;
+    connection.query("DELETE FROM users WHERE id = ?", [id], (err, results) => {
+        if (err) return res.status(500).json({erro: err});
+        if (results.affectedRows === 0) return res.status(404).json({message: 'Usuário não encontrado'});
+        res.status(200).json({message: 'Usuário excluído com sucesso'});
+    });
+});
+
+module.exports = router;
