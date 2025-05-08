@@ -1,6 +1,5 @@
-const inquirer = require('inquirer');
+const inquirer = require('inquirer').default;
 const connection = require('./database.js');
-const { criarUsuarios } = require('./controllers/userController.js');
 
 function listarUsuarios(){
     connection.query("SELECT * FROM users", (err, results) => {
