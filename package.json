@@ -8,10 +8,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "<h2>Instruções para instalação das dependências</h2>\r  - npm init -y <br>\r  - npm install express mysql2 inquirer<br>\r  - git clone https://github.com/AmandKorcz/Cybersecurity_project.git <br>",
   "dependencies": {
     "express": "^5.1.0",
     "inquirer": "^12.6.0",
     "mysql2": "^3.14.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmandKorcz/Cybersecurity_project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AmandKorcz/Cybersecurity_project/issues"
+  },
+  "homepage": "https://github.com/AmandKorcz/Cybersecurity_project#readme"
 }
