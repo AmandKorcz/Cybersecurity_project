@@ -6,7 +6,8 @@
  - git clone https://github.com/AmandKorcz/Cybersecurity_project.git <br>
 
  <h2>Como rodar a aplicação localmente</h2>
- - node index.js <br>
+ - Se for via terminal (CLI): node menu.js <br>
+ - Se for via HTTP(Postman, fornt-end, navegador): node index.js <br>
 
  <h2>Exemplos de requisição utilizando o Postman</h2>
  
