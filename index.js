@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const connection = require('./database.js');
 
+app.use(express.json());
+app.use('/', router);
+
 //GET - Endpoint para listar os usuários cadastrados
 router.get('/', (req, res) =>{
     connection.query("SELECT * FROM users", (err, results) =>{
