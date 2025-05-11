@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Usuários</title>
+  <link rel="stylesheet" href="gerenciamento.css">
+</head>
+<body>
+  <div class="container">
+    <button class="logout" onclick="logout()">Sair</button>
+    <h1>Gerenciamento de Usuários</h1>
+    
+    <div class="add-form">
+      <h3>Adicionar Usuário</h3>
+      <input type="text" id="nome" placeholder="Nome">
+      <input type="email" id="email" placeholder="E-mail">
+      <input type="password" id="senha" placeholder="Senha">
+      <button onclick="adicionarUsuario()">Salvar</button>
+    </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Cadastrado em</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="userTable">
+        <!-- Usuários serão carregados aqui -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="gerenciamento.js"></script>
+</body>
+</html>
