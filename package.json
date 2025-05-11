@@ -10,8 +10,10 @@
   "license": "ISC",
   "description": "<h2>Instruções para instalação das dependências</h2>\r  - npm init -y <br>\r  - npm install express mysql2 inquirer<br>\r  - git clone https://github.com/AmandKorcz/Cybersecurity_project.git <br>",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^5.1.0",
     "inquirer": "^12.6.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1"
   },
   "repository": {

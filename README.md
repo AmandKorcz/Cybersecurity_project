@@ -4,6 +4,7 @@
  - npm init -y <br>
  - npm install express mysql2 inquirer<br>
  - git clone https://github.com/AmandKorcz/Cybersecurity_project.git <br>
+ - npm install bcrypt jsonwebtoken <br>
 
  <h2>Como rodar a aplicação localmente</h2>
  - Se for via terminal (CLI): node menu.js <br>
