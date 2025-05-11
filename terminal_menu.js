@@ -1,24 +1,59 @@
 const inquirer = require('inquirer').default;
 const connection = require('./database.js');
+const axios = require("axios");
+let token = null;
 
-function listarUsuarios(){
-    connection.query("SELECT * FROM users", (err, results) => {
-        if(err) console.error("Erro: ", err);
-        else console.table(results);
-        mostrarMenu();
+function loginUsuario(){
+    inquirer.prompt([
+        {type: 'input', name: 'email', message: 'Digite seu email: '},
+        {type: 'password', name: 'senha', message: 'Digite sua senha: '}
+    ]).then(async answers => {
+        try{
+            const response = await axios.post('http://localhost:3000/login', {
+                email: answers.email,
+                senha: answers.senha
+            });
+            token = response.data.token;
+            console.log("Login realizado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao fazer login: ", error.response?.data?.message || error.message);
+        } finally {
+            mostrarMenu();
+        }
     });
+}
+
+async function listarUsuarios(){
+    try{
+        const response = await axios.get('http://localhost:3000/', {
+            headers: {Authotization: `Bearer ${token}`}
+        });
+        console.table(response.data);
+    }catch (error){
+        console.error("Erro: ", error.response?.data?.message || error.message);
+    }finally{
+        mostrarMenu();
+    }
 }
 
 function criarUsuarios(){
     inquirer.prompt([
         {type: 'input', name: 'nome', message: 'Digite o nome: '},
-        {type: 'input', name: 'email', message: 'Digite seu email'}
-    ]).then(answers => {
-        connection.query("INSERT INTO users (nome, email) VALUES (?, ?)", [answers.nome, answers.email], (err, results) => {
-            if (err) console.error("Erro: ", err);
-            else console.log("Usuário criado com sucesso! ID: ", results.insertId);
+        {type: 'input', name: 'email', message: 'Digite seu email'},
+        {type: 'input', name: 'senha', message: 'Digite a senha: '}
+    ]).then(async answers => {
+        try {
+            const response = await axios.post('http://localhost:3000/', {
+                nome: answers.nome,
+                email: answers.email,
+                senha: answers.senha
+            });
+            console.log("✅ Usuário criado com sucesso! ID:", response.data.id);
+        } catch (error) {
+            console.error("Erro:", error.response?.data?.message || error.message);
+        } finally {
             mostrarMenu();
-        });
+        }
     });
 }
 
@@ -27,26 +62,37 @@ function atualizarUsuarios(){
         {type: 'input', name: 'id', message: 'Digite o ID do usuário a ser atualizado: '},
         {type: 'input', name: 'nome', message: 'Digite o novo nome: '},
         {type: 'input', name: 'email', message: 'Digite o novo email: '}
-    ]).then(answers => {
-        connection.query("UPDATE users SET nome = ?, email = ? WHERE id = ?", [answers.nome, answers.email, answers.id], (err, results) => {
-            if (err) console.error("Erro: ", err);
-            else if (results.affectedRows === 0) console.log("Usuário não encontrado!");
-            else console.log("Usuário atualizado com sucesso!");
+    ]).then(async answers => {
+        try {
+            const response = await axios.put(`http://localhost:3000/${answers.id}`, {
+                nome: answers.nome,
+                email: answers.email
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            console.log("✅", response.data.message);
+        } catch (error) {
+            console.error("Erro:", error.response?.data?.message || error.message);
+        } finally {
             mostrarMenu();
-        });
+        }
     });
 }
 
 function deletarUsuarios(){
     inquirer.prompt([
         {type: 'input', name: 'id', message: 'Digite o ID do usuário a ser deletado: '}
-    ]).then(answers => {
-        connection.query("DELETE FROM users WHERE id = ?", [answers.id], (err, results) => {
-            if (err) console.error("Erro: ", err);
-            else if (results.affectedRows === 0) console.log("Usuário não encontrado!");
-            else console.log("Usuário excluído com sucesso!");
+    ]).then(async answers => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/${answers.id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            console.log("✅", response.data.message);
+        } catch (error) {
+            console.error("Erro:", error.response?.data?.message || error.message);
+        } finally {
             mostrarMenu();
-        })
+        }
     });
 }
 
@@ -56,10 +102,13 @@ function mostrarMenu(){
             type: 'list',
             name: 'opcao',
             message: 'Escolha uma das opções a seguir: ',
-            choices: ['Listar usuários', 'Criar usuário', 'Atualizar usuário', 'Deletar usuário', 'Sair']
+            choices: ['Login','Listar usuários', 'Criar usuário', 'Atualizar usuário', 'Deletar usuário', 'Sair']
         }
     ]).then(answers => {
         switch (answers.opcao) {
+            case 'Login':
+                loginUsuario();
+                break;
             case 'Listar usuários':
                 listarUsuarios();
                 break;
