@@ -1,4 +1,6 @@
 const connection = require('../database');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //GET - Endpoint para listar os usuários cadastrados
 exports.listarUsuarios = (req,res) => {
@@ -10,13 +12,19 @@ exports.listarUsuarios = (req,res) => {
 
 //POST - Endpoint para criar novos usuários 
 exports.criarUsuarios = (req, res) => {
-    const {nome, email} = req.body;
-    if (!nome || !email) return res.status(400).json({message: "Nome e email são chaves obrigatórias"});
+    const {nome, email, senha} = req.body;
+    if (!nome || !email || !senha) return res.status(400).json(
+        {message: "Nome, email e senha são chaves obrigatórias"}
+    );
 
-    connection.query("INSERT INTO users (nome, email) VALUES (?, ?)", [nome, email], (err, results) =>{
-        if (err) return res.status(500).json({erro: err});
-        res.status(201).json({message: "Usuário criado com sucesso", id: results.insertId});
-    });
+    try{
+        connection.query("INSERT INTO users (nome, email) VALUES (?, ?)", [nome, email], (err, results) =>{
+            if (err) return res.status(500).json({erro: err});
+            res.status(201).json({message: "Usuário criado com sucesso", id: results.insertId});
+        });
+    } catch {
+        res.stauts(500).json({erro: error.message});
+    }
 };
 
 //PUT - Endpoint para atualizar cadastros dos usuários
@@ -38,5 +46,23 @@ exports.deletarUsuarios = (req, res) => {
         if (err) return res.status(500).json({erro: err});
         if (results.affectedRows === 0) return res.status(404).json({message: 'Usuário não encontrado'});
         res.status(200).json({message: 'Usuário excluído com sucesso'});
+    });
+};
+
+//LOGIN do usuário
+exports.loginUsuario = (req, res) => {
+    const {email, senha} = req.body;
+    if (!email || !senha) return res.status(400).json({message: "Email e senha são obrigatórios"});
+
+    connection.query("SELECT * FROM users WHERE email = ?", [email], async(err, results) => {
+        if (err) return res.status(500).json({erro: err});
+        if (results.length === 0) return res.status(401).json({message: "Usuário não encontrado"});
+
+        const usuario = results[0];
+        const senhaCorreta = await crypto.compare(senha, usuario.senha);
+        if (!senhaCorreta) return res.status(401).json({message: "Senha ou email incorretos."});
+
+        const token = jwt.sign ({id: usuario.id, email: usuario.email}, 'secreto', {expiresIn: '1h'});
+        res.status(200).json({message: "Login realizado com sucesso", token});
     });
 };
