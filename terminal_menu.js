@@ -49,7 +49,7 @@ function criarUsuarios() {
         { type: 'input', name: 'senha', message: 'Digite a senha: ' }
     ]).then(async answers => {
         try {
-            const response = await axios.post('http://localhost:3000/', {
+            const response = await axios.post('http://localhost:3000/register', {
                 nome: answers.nome,
                 email: answers.email,
                 senha: answers.senha
@@ -57,6 +57,8 @@ function criarUsuarios() {
             console.log("Usuário criado com sucesso. ID:", response.data.id);
         } catch (error) {
             console.error("Erro ao criar usuário:", error.response?.data?.message || error.message);
+            console.error("Detalhes do erro:", error.response?.data);
+            console.error("Detalhes completos do erro:", error); 
         } finally {
             mostrarMenu();
         }

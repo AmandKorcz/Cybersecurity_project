@@ -4,10 +4,11 @@ const userController = require('../controllers/userController.js');
 const autenticarToken = require('../middlewares/auth.js');
 
 router.post('/login', userController.loginUsuario);
+router.post('/register', userController.criarUsuarios); 
 
-router.get('/', userController.listarUsuarios);
-router.post('/', userController.criarUsuarios);
-router.put('/:id', userController.atualizarUsuarios);
-router.delete('/:id', userController.deletarUsuarios);
+// Rotas protegidas
+router.get('/', autenticarToken, userController.listarUsuarios);
+router.put('/:id', autenticarToken, userController.atualizarUsuarios);
+router.delete('/:id', autenticarToken, userController.deletarUsuarios);
 
 module.exports = router;
