@@ -5,18 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerenciamento de Usuários</title>
   <link rel="stylesheet" href="gerenciamento.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Adicione o SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="container">
-    <button class="logout" onclick="logout()">Sair</button>
-    <h1>Gerenciamento de Usuários</h1>
+    <h1><i class="fas fa-users-cog"></i> Gerenciamento de Usuários</h1>
     
     <div class="add-form">
-      <h3>Adicionar Usuário</h3>
-      <input type="text" id="nome" placeholder="Nome">
-      <input type="email" id="email" placeholder="E-mail">
-      <input type="password" id="senha" placeholder="Senha">
-      <button onclick="adicionarUsuario()">Salvar</button>
+      <h2><i class="fas fa-user-plus"></i> Adicionar Usuário</h2>
+      <div class="input-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" placeholder="Digite o nome">
+      </div>
+      <div class="input-group">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" placeholder="Digite o e-mail">
+      </div>
+      <button onclick="adicionarUsuario()">
+        <i class="fas fa-save"></i> Salvar
+      </button>
     </div>
     
     <table>
@@ -25,12 +34,11 @@
           <th>ID</th>
           <th>Nome</th>
           <th>E-mail</th>
-          <th>Cadastrado em</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody id="userTable">
-        <!-- Usuários serão carregados aqui -->
+        <!-- Dados serão inseridos aqui via JavaScript -->
       </tbody>
     </table>
   </div>
