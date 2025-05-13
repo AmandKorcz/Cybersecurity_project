@@ -1,10 +1,12 @@
 # Cybersecurity_project
+<h4> By Amanda Korczagin e Flavia Antonieli</h4> 
 
 <h2>Instruções para instalação das dependências</h2>
  - npm init -y <br>
  - npm install express mysql2 inquirer<br>
  - npm install bcrypt jsonwebtoken <br>
  - npm install axios <br>
+ - npm install cors <br>
  - git clone https://github.com/AmandKorcz/Cybersecurity_project.git <br>
 
  <h2>Como rodar a aplicação localmente</h2>
