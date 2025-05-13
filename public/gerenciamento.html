@@ -15,21 +15,23 @@
     
     <div class="add-form">
       <h2><i class="fas fa-user-plus"></i> Adicionar Usuário</h2>
-      <div class="input-group">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" placeholder="Digite o nome">
-      </div>
-      <div class="input-group">
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" placeholder="Digite o e-mail">
-      </div>
-      <div class="input-group">
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" required minlength="3">
-      </div>
-      <button onclick="adicionarUsuario()">
-        <i class="fas fa-save"></i> Salvar
-      </button>
+      <form id="formAdicionarUsuario">
+        <div class="input-group">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" placeholder="Digite o nome">
+        </div>
+        <div class="input-group">
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" placeholder="Digite o e-mail">
+        </div>
+        <div class="input-group">
+          <label for="senha">Senha:</label>
+          <input type="password" id="senha" placeholder="Digite a senha" minlength="3" required>
+        </div>
+        <button type="submit">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+      </form>
     </div>
     
     <table>
