@@ -5,7 +5,6 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
   const senha = document.getElementById('loginSenha').value;
 
   try {
-    // Mostra mensagem de carregamento
     alert("Processando login...");
 
     const res = await fetch("http://localhost:3000/login", {
@@ -20,7 +19,7 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
       throw new Error(data.message || "Credenciais inválidas");
     }
 
-    // Armazena o token e redireciona
+    // Armazenando o token e redireciona
     localStorage.setItem("token", data.token);
     alert("Login bem-sucedido! Redirecionando...");
     window.location.href = "gerenciamento.html";
@@ -30,7 +29,6 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
   }
 });
 
-// Seção opcional para cadastro (sem SweetAlert)
 document.getElementById('formCadastro')?.addEventListener('submit', async (e) => {
   e.preventDefault();
 

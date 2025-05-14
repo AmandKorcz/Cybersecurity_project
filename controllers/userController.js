@@ -73,7 +73,7 @@ exports.loginUsuario = (req, res) => {
     const {email, senha} = req.body;
     if (!email || !senha) return res.status(400).json({message: "Email e senha são obrigatórios"});
 
-    connection.query("SELECT * FROM users WHERE email = ?", [email], async(err, results) => {
+    connection.query("SELECT * FROM users WHERE email = ?, senha = ?", [email, senha], async(err, results) => {
         if (err) return res.status(500).json({erro: err});
         if (results.length === 0) return res.status(401).json({message: "Usuário não encontrado"});
 
