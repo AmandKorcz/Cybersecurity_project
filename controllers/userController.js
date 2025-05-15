@@ -1,6 +1,7 @@
 const connection = require('../database');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require('express-validator');
 
 //GET - Endpoint para listar os usuários cadastrados
 exports.listarUsuarios = (req,res) => {
@@ -12,13 +13,13 @@ exports.listarUsuarios = (req,res) => {
 
 //POST - Endpoint para criar novos usuários 
 exports.criarUsuarios = async (req, res) => {
-    const { nome, email, senha } = req.body;
-    console.log("Dados recebidos:", { nome, email, senha }); 
-
-    if (!nome || !email || !senha) {
-        console.log("Faltando campos obrigatórios");
-        return res.status(400).json({ message: "Nome, email e senha são obrigatórios." });
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+        return res.status(400).json({ erros: erros.array() }); 
     }
+
+  const { nome, email, senha } = req.body;
+  console.log('Dados recebidos:', { nome, email, senha });
 
     try {
         console.log("Iniciando criptografia da senha");
@@ -50,6 +51,8 @@ exports.criarUsuarios = async (req, res) => {
 exports.atualizarUsuarios = (req, res) =>{
     const {id} = req.params;
     const {nome, email} = req.body;
+
+    console.log("Dados recebidos:", { id, nome, email });
 
     connection.query("UPDATE users SET nome = ?, email = ? WHERE id = ?", [nome, email, id], (err, results) =>{
         if (err) return res.status(500).json({erro: err});
