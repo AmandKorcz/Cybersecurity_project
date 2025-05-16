@@ -128,7 +128,7 @@ tr:hover {
     flex-direction: column;
     gap: 5px;
   }
-}/* Estilos para os popups */
+}
 .swal2-popup {
   background: #1a1a2e !important;
   color: white !important;

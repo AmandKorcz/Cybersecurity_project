@@ -49,19 +49,15 @@
   </div>
   <div id="footer-container"></div>
   <script>
-    // Carrega o header e depois o script do header
     fetch('header.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
-        // Carrega o script do header após o conteúdo ser inserido
         const script = document.createElement('script');
         script.src = 'header.js';
         document.body.appendChild(script);
       })
       .catch(error => console.error('Erro ao carregar header:', error));
-    
-    // Carrega o footer
     fetch('footer.html')
       .then(response => response.text())
       .then(data => document.getElementById('footer-container').innerHTML = data)

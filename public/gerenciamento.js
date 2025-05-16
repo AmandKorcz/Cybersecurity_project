@@ -8,10 +8,8 @@ async function renderizarTabela() {
       headers: { Authorization: `Bearer ${token}` }
     });
     const usuarios = await res.json();
-
     const tabela = document.getElementById('userTable');
     tabela.innerHTML = '';
-
     usuarios.forEach(usuario => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -34,7 +32,7 @@ async function renderizarTabela() {
   }
 }
 
-async function adicionarUsuario() { // Sem parâmetro event
+async function adicionarUsuario() { 
   const nome = document.getElementById('nome').value.trim();
   const email = document.getElementById('email').value.trim();
   const senha = document.getElementById('senha').value;
